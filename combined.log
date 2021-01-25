@@ -1,0 +1,1 @@
+{"meta":{"req":{"url":"/","headers":{"host":"localhost:3001","user-agent":"insomnia/2020.5.2","accept":"*/*"},"method":"GET","httpVersion":"1.1","originalUrl":"/","query":{}},"res":{"statusCode":200},"responseTime":2},"level":"info","message":"HTTP GET /"}
