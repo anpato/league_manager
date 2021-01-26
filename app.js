@@ -1,5 +1,6 @@
 const dependencies = require('./config/dependencies')
 const { port } = require('./env')
+const { handleError } = require('./middleware/ErrorHandlers')
 const router = require('./router')
 
 class Server {
@@ -14,6 +15,10 @@ class Server {
 
   initRoutes() {
     this.app.use('/api', router)
+    this.app.use((err, req, res, next) => handleError(err, res))
+    this.app.use('*', (req, res) =>
+      res.status(404).send({ status: 404, msg: 'Not Found' })
+    )
   }
 
   start() {

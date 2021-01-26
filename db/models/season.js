@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       season: DataTypes.STRING,
       leagueId: {
         type: DataTypes.UUID,
+        field: 'league_id',
         references: {
           model: 'leagues',
           key: 'id'

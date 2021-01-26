@@ -18,6 +18,7 @@ module.exports = {
       season: Sequelize.STRING,
       leagueId: {
         type: Sequelize.UUID,
+        field: 'league_id',
         references: {
           model: 'leagues',
           key: 'id'

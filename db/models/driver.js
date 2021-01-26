@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'driver_id'
       })
       Driver.belongsToMany(models.Team, {
-        through:models.DriverTeam,
-        foreignKey:'driver_id'
+        through: models.DriverTeam,
+        foreignKey: 'driver_id'
       })
     }
   }
@@ -56,8 +56,10 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'drivers'
     }
   )
-  Driver.beforeCreate((driver) => {
-    driver.passwordDigest = await PasswordHandler.genPassword(driver.passwordDigest)
+  Driver.beforeCreate(async (driver) => {
+    driver.passwordDigest = await PasswordHandler.genPassword(
+      driver.passwordDigest
+    )
   })
   return Driver
 }

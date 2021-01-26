@@ -11,6 +11,19 @@ class PasswordHandler {
   }
 }
 
+const buildRouter = (router, controller) => {
+  let builtRouter = router
+  controller.forEach((control) =>
+    builtRouter[control.method](
+      control.path,
+      control.middleware || [],
+      control.fn
+    )
+  )
+  return builtRouter
+}
+
 module.exports = {
-  PasswordHandler
+  PasswordHandler,
+  buildRouter
 }
