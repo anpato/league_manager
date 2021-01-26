@@ -10,6 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      League.belongsToMany(models.Organizer, {
+        through: models.LeagueOwner,
+        as: 'leagues',
+        foreignKey: 'league_id'
+      })
+      League.hasMany(models.Season, {
+        foreignKey: 'league_id',
+        onDelete: 'CASCADE'
+      })
+      League.belongsToMany(models.Driver, {
+        through: models.Division,
+        as: 'drivers',
+        foreignKey: 'league_id'
+      })
     }
   }
   League.init(
