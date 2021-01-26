@@ -1,5 +1,5 @@
 const { PasswordHandler } = require('../helpers')
-const { Organizer } = require('../db/models')
+const { Organizer, Driver } = require('../db/models')
 
 const LoginOrganizer = async (req, res, next) => {
   try {
@@ -17,11 +17,11 @@ const LoginOrganizer = async (req, res, next) => {
       return res.send(organizer)
     }
   } catch (error) {
-    next()
+    next(error)
   }
 }
 
-const RegisterOrganizer = async (req, res) => {
+const RegisterOrganizer = async (req, res, next) => {
   try {
     const { password, email, name } = req.body
     let passwordDigest = await PasswordHandler.genPassword(password)
@@ -32,7 +32,46 @@ const RegisterOrganizer = async (req, res) => {
   }
 }
 
+const LoginDriver = async (req, res, next) => {
+  try {
+    const driver = await Driver.findOne({
+      where: { email: req.body.email },
+      raw: true
+    })
+    if (
+      driver &&
+      (await PasswordHandler.comparePasswords(
+        driver.passwordDigest,
+        req.body.password
+      ))
+    ) {
+      return res.send(driver)
+    }
+  } catch (error) {
+    return next(error)
+  }
+}
+
+const RegisterDriver = async (req, res, next) => {
+  try {
+    const { email, name, password, platformId, platform } = req.body
+    let passwordDigest = await PasswordHandler.genPassword(password)
+    const driver = await Driver.create({
+      email,
+      name,
+      passwordDigest,
+      platform,
+      platformId
+    })
+    res.send(driver)
+  } catch (error) {
+    return next(error)
+  }
+}
+
 module.exports = {
   LoginOrganizer,
-  RegisterOrganizer
+  RegisterOrganizer,
+  LoginDriver,
+  RegisterDriver
 }
