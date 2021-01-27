@@ -1,4 +1,11 @@
-const { League, LeagueOwner, Season, Driver } = require('../db/models')
+const {
+  League,
+  LeagueOwner,
+  Season,
+  Driver,
+  Division,
+  Team
+} = require('../db/models')
 const { errorMethods } = require('../middleware/ErrorHandlers')
 
 const CreateLeague = async (req, res, next) => {
@@ -27,7 +34,11 @@ const GetLeagues = async (req, res, next) => {
 const GetLeague = async (req, res, next) => {
   try {
     const league = await League.findByPk(req.params.league_id, {
-      include: [{ model: Season }, { model: Driver, as: 'drivers' }]
+      include: [
+        { model: Season },
+        // { model: Division },
+        { model: Driver, as: 'drivers', include: [Team] }
+      ]
     })
     if (!league) {
       return next(errorMethods.custom(404, 'League Not Found'))

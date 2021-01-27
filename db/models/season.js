@@ -21,7 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         field: 'driver_standings',
         type: DataTypes.JSONB,
         get: function (value) {
-          return JSON.parse(this.getDataValue(value))
+          let stands = this.getDataValue(value)
+          if (stands.length) {
+            return JSON.parse(this.getDataValue(value))
+          }
+          return stands
         },
         set: function (value) {
           return this.setDataValue(JSON.stringify(value))
@@ -31,7 +35,11 @@ module.exports = (sequelize, DataTypes) => {
         field: 'constructor_standings',
         type: DataTypes.JSONB,
         get: function (value) {
-          return JSON.parse(this.getDataValue(value))
+          let stands = this.getDataValue(value)
+          if (stands.length) {
+            return JSON.parse(this.getDataValue(value))
+          }
+          return stands
         },
         set: function (value) {
           return this.setDataValue(JSON.stringify(value))

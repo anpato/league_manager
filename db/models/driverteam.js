@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      DriverTeam.belongsTo(models.Division, { foreignKey: 'division_id' })
     }
   }
   DriverTeam.init(
@@ -32,11 +33,21 @@ module.exports = (sequelize, DataTypes) => {
           model: 'drivers',
           key: 'id'
         }
+      },
+      divisionId: {
+        type: DataTypes.UUID,
+        field: 'division_id',
+        references: {
+          model: 'divisions',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       }
     },
     {
       sequelize,
-      modelName: 'DriverTeam'
+      modelName: 'DriverTeam',
+      tableName: 'driver_teams'
     }
   )
   return DriverTeam
