@@ -13,11 +13,6 @@ const controller = [
     ],
     fn: ViewStandings
   }
-  // {
-  //   path: '/list/:season_id',
-  //   method: 'get'
-  //   // fn:
-  // }
 ]
 
 router = buildRouter(router, controller)
