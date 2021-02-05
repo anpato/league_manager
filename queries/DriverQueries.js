@@ -57,5 +57,6 @@ const DropDriver = async (req, res, next) => {
 module.exports = {
   AddDriver,
   ApplyDriverDivision,
-  ReviewDriverApplication
+  ReviewDriverApplication,
+  DropDriver
 }
