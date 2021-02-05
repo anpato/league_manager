@@ -1,26 +1,20 @@
 const { buildRouter } = require('../helpers')
 const Validators = require('../middleware/Validators')
-const { ViewSeasons, AddSeason } = require('../queries/SeasonQueries')
+const { ViewStandings } = require('../queries/StandingsQueries')
 
 let router = require('express').Router()
 
 const controller = [
   {
-    path: '/',
+    path: '/:season_id',
     method: 'get',
     middleware: [
       (req, res, next) => Validators.checkId(req, res, next, 'season_id')
     ],
-    fn: ViewSeasons
-  },
-  {
-    path: '/',
-    method: 'post',
-    middleware: [],
-    fn: AddSeason
+    fn: ViewStandings
   }
 ]
 
 router = buildRouter(router, controller)
 
-module.exports = { path: '/seasons', router }
+module.exports = { path: '/standings', router }

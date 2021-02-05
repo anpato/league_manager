@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       DriverTeam.belongsTo(models.Division, { foreignKey: 'division_id' })
+      // DriverTeam.hasMany(models.Driver, { foreignKey: 'driver_id' })
+      // DriverTeam.hasMany(models.Team, { foreignKey: 'team_id' })
     }
   }
   DriverTeam.init(

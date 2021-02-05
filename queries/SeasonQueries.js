@@ -1,4 +1,4 @@
-const { Season } = require('../db/models')
+const { Season, Standings, Division } = require('../db/models')
 const { errorMethods } = require('../middleware/ErrorHandlers')
 
 const ViewSeasons = async (req, res, next) => {
@@ -12,10 +12,13 @@ const ViewSeasons = async (req, res, next) => {
   }
 }
 
-const ViewStandings = async (req, res, next) => {
+const AddSeason = async (req, res, next) => {
   try {
-    const standings = await Season.findByPk(req.params.season_id)
-    res.send(standings)
+    const season = await Season.create({
+      ...req.body,
+      leagueId: req.query.league_id
+    })
+    res.send(season)
   } catch (error) {
     next(errorMethods.default(error))
   }
@@ -23,5 +26,5 @@ const ViewStandings = async (req, res, next) => {
 
 module.exports = {
   ViewSeasons,
-  ViewStandings
+  AddSeason
 }

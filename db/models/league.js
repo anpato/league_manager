@@ -19,9 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'league_id',
         onDelete: 'CASCADE'
       })
-      League.belongsToMany(models.Driver, {
-        through: models.Division,
-        as: 'drivers',
+      League.hasMany(models.Division, {
+        // as: 'divisions',
         foreignKey: 'league_id'
       })
     }

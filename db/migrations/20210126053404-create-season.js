@@ -7,14 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      driverStandings: {
-        field: 'driver_standings',
-        type: Sequelize.JSONB
-      },
-      constructorStandings: {
-        field: 'constructor_standings',
-        type: Sequelize.JSONB
-      },
       season: Sequelize.STRING,
       leagueId: {
         type: Sequelize.UUID,

@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Driver.belongsToMany(models.League, {
-        through: models.Division,
-        as: 'drivers',
-        foreignKey: 'driver_id'
-      })
+      // Driver.belongsToMany(models.League, {
+      //   through: models.Division,
+      //   as: 'drivers',
+      //   foreignKey: 'driver_id'
+      // })
       Driver.belongsToMany(models.Team, {
         through: models.DriverTeam,
         foreignKey: 'driver_id'

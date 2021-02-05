@@ -3,14 +3,16 @@ const Validators = require('../middleware/Validators')
 const {
   CreateLeague,
   GetLeague,
-  GetLeagues
+  GetLeagues,
+  UpdateLeague,
+  DropLeague
 } = require('../queries/LeagueQueries')
 
 let router = require('express').Router()
 
 let controller = [
   {
-    path: '/',
+    path: '/register/:owner_id',
     method: 'post',
     fn: CreateLeague
   },
@@ -27,6 +29,18 @@ let controller = [
     method: 'get',
     middleware: [],
     fn: GetLeagues
+  },
+  {
+    path: '/update/:league_id',
+    method: 'put',
+    middleware: [],
+    fn: UpdateLeague
+  },
+  {
+    path: '/:owner_id/remove/:league_id',
+    method: 'delete',
+    middleware: [],
+    fn: DropLeague
   }
 ]
 

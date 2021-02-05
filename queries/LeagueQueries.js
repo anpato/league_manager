@@ -3,8 +3,10 @@ const {
   LeagueOwner,
   Season,
   Driver,
+  DriverTeam,
   Division,
-  Team
+  Team,
+  Standings
 } = require('../db/models')
 const { errorMethods } = require('../middleware/ErrorHandlers')
 
@@ -33,12 +35,9 @@ const GetLeagues = async (req, res, next) => {
 
 const GetLeague = async (req, res, next) => {
   try {
+    console.log('hi')
     const league = await League.findByPk(req.params.league_id, {
-      include: [
-        { model: Season },
-        // { model: Division },
-        { model: Driver, as: 'drivers', include: [Team] }
-      ]
+      include: [Season]
     })
     if (!league) {
       return next(errorMethods.custom(404, 'League Not Found'))
@@ -49,10 +48,34 @@ const GetLeague = async (req, res, next) => {
   }
 }
 
-// const
+const UpdateLeague = async (req, res, next) => {
+  try {
+    const league = await League.update(
+      { ...req.body },
+      { where: { id: req.params.league_id }, returning: true }
+    )
+    res.send(league[0][1])
+  } catch (error) {
+    return next(errorMethods.default(error))
+  }
+}
+
+const DropLeague = async (req, res, next) => {
+  try {
+    await League.destroy({ where: { id: req.params.league_id } })
+    res.send({
+      msg: 'League Successfully Deleted',
+      leagueId: req.params.league_id
+    })
+  } catch (error) {
+    return next(errorMethods.default(error))
+  }
+}
 
 module.exports = {
   CreateLeague,
   GetLeague,
-  GetLeagues
+  GetLeagues,
+  UpdateLeague,
+  DropLeague
 }

@@ -9,8 +9,6 @@ module.exports = {
       id: uuid(),
       season: faker.random.number({ min: 1, max: 6 }),
       league_id: leagues[Math.floor(index / 4)].id,
-      constructor_standings: JSON.stringify([]),
-      driver_standings: JSON.stringify([]),
       createdAt: new Date(),
       updatedAt: new Date()
     }))
