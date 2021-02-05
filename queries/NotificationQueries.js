@@ -12,6 +12,14 @@ const GetNewApplications = async (req, res, next) => {
     let divIds = divisions.map(({ id }) => id)
 
     const newApps = await DriverTeam.findAll({
+      attributes: [
+        'id',
+        'approved',
+        'createdAt',
+        'driverId',
+        'divisionId',
+        'teamId'
+      ],
       where: { [Op.and]: [{ divisionId: divIds }, { viewed: false }] }
     })
     res.send(newApps)
@@ -24,7 +32,7 @@ const MarkApplicationViewed = async (req, res, next) => {
   try {
     const viewedApp = await DriverTeam.update(
       { viewed: true },
-      { where: { id: req.body.notificationIds } }
+      { where: { id: req.body.notificationIds }, returning: true }
     )
     res.send(viewedApp)
   } catch (error) {
