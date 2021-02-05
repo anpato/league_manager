@@ -1,6 +1,9 @@
 const { buildRouter } = require('../helpers')
 const Validators = require('../middleware/Validators')
-const { ViewStandings } = require('../queries/StandingsQueries')
+const {
+  ViewStandings,
+  UpdateStandings
+} = require('../queries/StandingsQueries')
 
 let router = require('express').Router()
 
@@ -12,6 +15,12 @@ const controller = [
       (req, res, next) => Validators.checkId(req, res, next, 'season_id')
     ],
     fn: ViewStandings
+  },
+  {
+    path: '/:season_id',
+    method: 'put',
+    middleware: [],
+    fn: UpdateStandings
   }
 ]
 

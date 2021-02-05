@@ -1,5 +1,6 @@
 const { Standings, Division } = require('../db/models')
 const { errorMethods } = require('../middleware/ErrorHandlers')
+
 const ViewStandings = async (req, res, next) => {
   try {
     const standings = await Standings.findAll({
@@ -15,6 +16,19 @@ const ViewStandings = async (req, res, next) => {
   }
 }
 
+const UpdateStandings = async (req, res, next) => {
+  try {
+    const standings = await Standings.update(
+      { ...req.body },
+      { where: { id: req.params.standings_id, returning: true } }
+    )
+    res.send(standings[0][1])
+  } catch (error) {
+    next(errorMethods.default(error))
+  }
+}
+
 module.exports = {
-  ViewStandings
+  ViewStandings,
+  UpdateStandings
 }

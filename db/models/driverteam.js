@@ -44,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
         },
         onDelete: 'CASCADE'
+      },
+      approved: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       }
     },
     {
